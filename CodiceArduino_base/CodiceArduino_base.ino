@@ -5,6 +5,8 @@ void setup() {
 }
 
 void loop() {
+  digitalWrite(13, LOW); //Da fare per ogni led, usare un for iterato su una lista
+  Serial.println("1"); //questa è importante per la comunicazione con l'interfaccia desktop
   while (1){    //assegnate le `coreografie` dentro questo loop, uno per coreografia. 
     digitalWrite(13,HIGH);
     if (lstnr(1000, 2)==1) {goto end1;} //questo deve essere usate al posto del delay. Se usate una variabile per il delay questa deve essere di tipo !!!long!!! non int
@@ -13,9 +15,9 @@ void loop() {
     if (lstnr(1000, 2)==1) {goto end1;}
   }
   end1:;
-  Serial.println("Stato 1->2"); //questa è importante per la comunicazione con l'interfaccia desktop
-  digitalWrite(13,LOW);         //si assicura che il led sia spento (fatela per ogni led che accendete in quella sopra)
   
+  Serial.println("2");
+  digitalWrite(13,LOW);         //si assicura che il led sia spento (fatela per ogni led che accendete in quella sopra)
   while (1){
     digitalWrite(13,HIGH);
     if (lstnr(5000, 2)==1) {goto end2;} 
@@ -23,9 +25,9 @@ void loop() {
     if (lstnr(2000, 2)==1) {goto end2;}
   }
   end2:;
-  Serial.println("Stato 2->3");
-  digitalWrite(13,LOW);
   
+  Serial.println("3");
+  digitalWrite(13,LOW);
   while (1){
     digitalWrite(13,HIGH);
     if (lstnr(3000, 2)==1) {goto end3;} 
@@ -33,10 +35,9 @@ void loop() {
     if (lstnr(3000, 2)==1) {goto end3;}
   }
   end3:;
-  Serial.println("Stato 3->1");
-  digitalWrite(13,LOW);
-  
+
 }
+
 
 int lstnr(long dl, int pn_i ){  //Attenzione! Se si usa una variabile per passare il tempo di attesa deve essere di tipo long
 //usare questa funzione così: if (lstnr(1000, 2)==1) {goto statement;}

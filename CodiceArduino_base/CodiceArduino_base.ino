@@ -10,7 +10,7 @@ void loop() {
     if (lstnr(1000, 2)==1) {goto end1;} //questo deve essere usate al posto del delay. Se usate una variabile per il delay questa deve essere di tipo !!!long!!! non int
                                         //non copiate e incollate ovunque. Se si deve uscire dal primo ciclo usare end1, dal secondo end2 e così via
     digitalWrite(13,LOW);
-    if (lstnr(1000, 2)==1) {break;}
+    if (lstnr(1000, 2)==1) {goto end1;}
   }
   end1:;
   Serial.println("Stato 1->2"); //questa è importante per la comunicazione con l'interfaccia desktop

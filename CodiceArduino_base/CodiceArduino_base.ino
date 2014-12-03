@@ -6,7 +6,7 @@ void setup() {
 
 void loop() {
   digitalWrite(13, LOW); //Da fare per ogni led, usare un for iterato su una lista
-  Serial.println("1"); //questa è importante per la comunicazione con l'interfaccia desktop
+  Serial.print("1"); //questa è importante per la comunicazione con l'interfaccia desktop
   while (1){    //assegnate le `coreografie` dentro questo loop, uno per coreografia. 
     digitalWrite(13,HIGH);
     if (lstnr(1000, 2)==1) {goto end1;} //questo deve essere usate al posto del delay. Se usate una variabile per il delay questa deve essere di tipo !!!long!!! non int
@@ -16,7 +16,7 @@ void loop() {
   }
   end1:;
   
-  Serial.println("2");
+  Serial.print("2");
   digitalWrite(13,LOW);         //si assicura che il led sia spento (fatela per ogni led che accendete in quella sopra)
   while (1){
     digitalWrite(13,HIGH);
@@ -26,7 +26,7 @@ void loop() {
   }
   end2:;
   
-  Serial.println("3");
+  Serial.print("3");
   digitalWrite(13,LOW);
   while (1){
     digitalWrite(13,HIGH);

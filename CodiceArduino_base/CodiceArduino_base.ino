@@ -4,15 +4,19 @@ void setup() {
   Serial.begin(9600);
 }
 
+int res = 0;
 void loop() {
+  start:;
   digitalWrite(13, LOW); //Da fare per ogni led, usare un for iterato su una lista
   Serial.print("1"); //questa è importante per la comunicazione con l'interfaccia desktop
   while (1){    //assegnate le `coreografie` dentro questo loop, uno per coreografia. 
     digitalWrite(13,HIGH);
-    if (lstnr(1000, 2)==1) {goto end1;} //questo deve essere usate al posto del delay. Se usate una variabile per il delay questa deve essere di tipo !!!long!!! non int
+    res = lstnr(1000, 2);
+    if (res == 1) {goto end1;} else if (res == 2){goto start;} //questo deve essere usate al posto del delay. Se usate una variabile per il delay questa deve essere di tipo !!!long!!! non int
                                         //non copiate e incollate ovunque. Se si deve uscire dal primo ciclo usare end1, dal secondo end2 e così via
     digitalWrite(13,LOW);
-    if (lstnr(1000, 2)==1) {goto end1;}
+    res = lstnr(1000, 2);
+    if (res == 1) {goto end1;} else if (res == 2){goto start;}
   }
   end1:;
   
@@ -20,9 +24,11 @@ void loop() {
   digitalWrite(13,LOW);         //si assicura che il led sia spento (fatela per ogni led che accendete in quella sopra)
   while (1){
     digitalWrite(13,HIGH);
-    if (lstnr(5000, 2)==1) {goto end2;} 
+    res = lstnr(500, 2);
+    if (res == 1) {goto end2;} else if (res == 2){goto start;}
     digitalWrite(13,LOW);
-    if (lstnr(2000, 2)==1) {goto end2;}
+    res = lstnr(500, 2);
+    if (res == 1) {goto end2;} else if (res == 2){goto start;}
   }
   end2:;
   
@@ -30,9 +36,11 @@ void loop() {
   digitalWrite(13,LOW);
   while (1){
     digitalWrite(13,HIGH);
-    if (lstnr(3000, 2)==1) {goto end3;} 
+    res = lstnr(250, 2); // Modificato
+    if (res == 1) {goto end3;} else if (res == 2){goto start;}
     digitalWrite(13,LOW);
-    if (lstnr(3000, 2)==1) {goto end3;}
+    res = lstnr(250, 2);
+    if (res == 1) {goto end3;} else if (res == 2){goto start;}
   }
   end3:;
 
@@ -45,11 +53,19 @@ int lstnr(long dl, int pn_i ){  //Attenzione! Se si usa una variabile per passar
   long c_t = millis();
   int a=0;
   while ((millis()-c_t)< dl) {
+    if (Serial.available() > 0) {
+      int input = Serial.read();
+      if (input == 0){
+        a=2;
+        break;
+      }
+    }
     if (digitalRead(pn_i)==HIGH) {
       a=1;
+      delay(500); //se non c'è questo delay il bottone è come fosse premuto anche molte volte di fila
       break;
     }
   }
-  delay(250); //se non c'è questo delay il bottone è come fosse premuto anche molte volte di fila
+  
   return a;
 }
